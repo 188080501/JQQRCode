@@ -25,7 +25,7 @@ QImage JasonQt_QRCodeWriter::makeQRcode(const QString &data)
 
     QPainter painter(&image);
     //NOTE: I have hardcoded some parameters here that would make more sense as variables.
-    QRcode *qr = QRcode_encodeString(data.toLatin1().data(), 1, QR_ECLEVEL_H, QR_MODE_8, 0);
+    QRcode *qr = QRcode_encodeString(data.toLatin1().data(), 1, QR_ECLEVEL_H, QR_MODE_8, 1);
     if(qr)
     {
         QColor fg("#000000");
