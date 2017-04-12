@@ -1,8 +1,6 @@
-对QZxing和qrencode的二次封装
+## 介绍
 
+JQQRCode，是一个给Qt开发的，二维码相关功能的封装。
 
-
-解析/扫描部分底层为QZxing
-
-生成部分底层为qrencode
+其中解析/扫描二维码部分底层为zxing，生成/制作二维码部分底层为qrencode。
 

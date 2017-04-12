@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/JQQRCodeReader">
+        <file>JQQRCodeReader/JQQRCodeReader.qml</file>
+        <file>JQQRCodeReader/qmldir</file>
+        <file>JQQRCodeReader/Frame.png</file>
+        <file>JQQRCodeReader/LightNeedle.png</file>
+    </qresource>
+</RCC>

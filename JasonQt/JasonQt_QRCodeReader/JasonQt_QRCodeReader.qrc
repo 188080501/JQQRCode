@@ -1,7 +1,0 @@
-<RCC>
-    <qresource prefix="/JasonQt_QRCodeReader">
-        <file>Frame.png</file>
-        <file>LightNeedle.png</file>
-        <file>JasonQt_QRCodeReader.qml</file>
-    </qresource>
-</RCC>
