@@ -59,9 +59,8 @@ Loader {
             Camera {
                 id: camera
 
-                exposure {
-                    exposureCompensation: -1.0
-                    exposureMode: Camera.ExposurePortrait
+                focus {
+                    focusMode: Camera.FocusContinuous
                 }
             }
 
@@ -71,6 +70,7 @@ Loader {
                 source: camera
                 focus : visible
                 autoOrientation: true
+                fillMode: PreserveAspectCrop
             }
 
             Rectangle {
