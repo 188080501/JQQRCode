@@ -51,7 +51,27 @@ void JQQRCodeReaderForQmlManage::analysisItem(QQuickItem *item)
 
         QtConcurrent::run( [ this, image ]()
         {
-            this->decodeImage( image );
+            QImage buf;
+            if ( image.width() > image.height() )
+            {
+                buf = image.copy(
+                            ( image.width() - image.height() ) / 2,
+                            0,
+                            image.height(),
+                            image.height()
+                        );
+            }
+            else
+            {
+                buf = image.copy(
+                            0,
+                            ( image.height() - image.width() ) / 2,
+                            image.width(),
+                            image.width()
+                        );
+            }
+
+            this->decodeImage( buf );
 
             quickItemGrabResult_.reset();
         } );

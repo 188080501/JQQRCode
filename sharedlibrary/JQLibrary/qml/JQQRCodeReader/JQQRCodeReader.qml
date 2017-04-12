@@ -70,7 +70,7 @@ Loader {
                 source: camera
                 focus : visible
                 autoOrientation: true
-                fillMode: PreserveAspectCrop
+                fillMode: VideoOutput.PreserveAspectCrop
             }
 
             Rectangle {
