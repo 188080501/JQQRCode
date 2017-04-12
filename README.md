@@ -24,7 +24,7 @@ qDebug() << qrCodeImage;
 ## 系统要求
 编译本工程，请使用支持C++11的编译器
 
-目前我测试了macOS、iOS、Windows（MinGW）和Android，均正常工作
+目前我测试了macOS、iOS、Windows (MinGW & VS2013)和Android，均正常工作
 
 理论上可以部署到任何Qt支持的平台上。
 
