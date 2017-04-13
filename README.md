@@ -28,6 +28,8 @@ qDebug() << qrCodeImage;
 
 理论上可以部署到任何Qt支持的平台上。
 
+注意：在iOS使用的时候，一定要给Info.plist加上NSCameraUsageDescription，不然程序一调用摄像头就崩溃
+
 本库源码均已开源在了GitHub上。
 
 GitHub地址：https://github.com/188080501/JQQRCode

@@ -8,7 +8,7 @@ Window {
     visible: true
     width: 320
     height: 480
-    title: "QRCodeReaderQml"
+    title: "QRCodeReaderForQml"
 
     Button {
         anchors.horizontalCenter: parent.horizontalCenter
