@@ -26,6 +26,8 @@ qDebug() << qrCodeImage;
 
 目前我测试了macOS、iOS、Windows (MinGW & VS2013)和Android，均正常工作
 
+测试时使用的是Qt5.8
+
 理论上可以部署到任何Qt支持的平台上。
 
 注意：在iOS使用的时候，一定要给Info.plist加上NSCameraUsageDescription，不然程序一调用摄像头就崩溃
