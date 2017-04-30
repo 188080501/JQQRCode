@@ -9,6 +9,11 @@ Loader {
     asynchronous: false
     active: false
 
+    property int decodeQrCodeType: 4096 // 二维码
+//    property int decodeQrCodeType: 32 // 一维码
+
+    signal tagFound( string tag )
+
     onVisibleChanged: {
         if ( !visible )
         {
@@ -19,7 +24,7 @@ Loader {
     sourceComponent: Component {
 
         Rectangle {
-            id: jasonQt_QRCodeReader
+            id: rectangleForView
             width: jqQRCodeReader.width
             height: jqQRCodeReader.height
             visible: true
@@ -29,11 +34,17 @@ Loader {
 
             JQQRCodeReaderForQmlManage {
                 id: jqQRCodeReaderForQmlManage
+                decodeQrCodeType: jqQRCodeReader.decodeQrCodeType
 
                 onTagFound: {
+                    rectangleForView.visible = false;
+                    animationForLightNeedle.running = false;
                     timer.running = false;
+                    timerForClose.running = true;
+
+                    camera.stop();
+
                     jqQRCodeReader.tagFound( tag );
-                    jqQRCodeReader.active = false;
                 }
             }
 
@@ -163,14 +174,15 @@ Loader {
                     source: "qrc:/JQQRCodeReader/JQQRCodeReader/LightNeedle.png"
 
                     PropertyAnimation {
-                        target: imageLightNeedle;
+                        id: animationForLightNeedle
+                        target: imageLightNeedle
                         property: "y"
                         from: 0
                         to: 176
                         duration: 4000
                         loops: -1
-                        running: imageLightNeedle.visible
-                        easing.type: Easing.InOutCubic;
+                        running: true
+                        easing.type: Easing.InOutCubic
                     }
                 }
             }
@@ -192,5 +204,14 @@ Loader {
         }
     }
 
-    signal tagFound( string tag )
+    Timer {
+        id: timerForClose
+        interval: 200
+        running: false
+        repeat: false
+
+        onTriggered: {
+            jqQRCodeReader.active = false;
+        }
+    }
 }
