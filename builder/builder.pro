@@ -10,12 +10,7 @@
 #   GitHub: https://github.com/188080501/
 #
 
-QT += core
+TEMPLATE = subdirs
 
-TEMPLATE = app
-
-#JQQRCODEREADER_COMPILE_MODE = SRC
-include( $$PWD/../../sharedlibrary/JQLibrary/JQLibrary.pri )
-
-SOURCES += \
-    $$PWD/cpp/main.cpp
+SUBDIRS += JQQRCodeWriterBuilder
+SUBDIRS += JQQRCodeReaderBuilder

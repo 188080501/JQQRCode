@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
         return -1;
     }
 
-    qrCodeImage.save( QString( "%1/test.png" ).arg( QStandardPaths::writableLocation( QStandardPaths::DesktopLocation ) ), "PNG" );
+    qDebug() << "save png succeed:" << qrCodeImage.save( QString( "%1/test.png" ).arg( QStandardPaths::writableLocation( QStandardPaths::DesktopLocation ) ), "PNG" );
 
     return 0;
 }
