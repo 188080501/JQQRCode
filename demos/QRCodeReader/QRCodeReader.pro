@@ -16,6 +16,7 @@ TEMPLATE = app
 
 #JQQRCODEWRITER_COMPILE_MODE = SRC
 include( $$PWD/../../sharedlibrary/JQLibrary/JQLibrary.pri )
+include( $$PWD/../../sharedlibrary/JQLibrary/JQQRCodeReader.pri )
 
 SOURCES += \
     $$PWD/cpp/main.cpp
