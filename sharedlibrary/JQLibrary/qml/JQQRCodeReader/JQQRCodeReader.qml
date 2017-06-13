@@ -30,11 +30,12 @@ Loader {
             visible: true
             color: "#000000"
 
-            signal tagFind(string tag)
+            Component.onCompleted: {
+                JQQRCodeReaderForQmlManage.decodeQrCodeType = jqQRCodeReader.decodeQrCodeType;
+            }
 
-            JQQRCodeReaderForQmlManage {
-                id: jqQRCodeReaderForQmlManage
-                decodeQrCodeType: jqQRCodeReader.decodeQrCodeType
+            Connections {
+                target: JQQRCodeReaderForQmlManage
 
                 onTagFound: {
                     rectangleForView.visible = false;
@@ -52,7 +53,7 @@ Loader {
                 anchors.fill: parent
 
                 onDoubleClicked: {
-                    jqQRCodeReader.active = false;
+                    timerForClose.running = true;
                 }
             }
 
@@ -63,7 +64,7 @@ Loader {
                 running: true
 
                 onTriggered: {
-                    jqQRCodeReaderForQmlManage.analysisItem( output )
+                    JQQRCodeReaderForQmlManage.analysisItem( output )
                 }
             }
 
