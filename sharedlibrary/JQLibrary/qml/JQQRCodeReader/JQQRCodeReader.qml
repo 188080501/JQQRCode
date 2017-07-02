@@ -103,7 +103,6 @@ Loader {
                 anchors.fill: videoOutput
                 source: brightnessContrast
                 desaturation: 1.0
-                visible: true
                 visible: false
             }
 
