@@ -23,3 +23,7 @@ SOURCES += \
 
 RESOURCES += \
     $$PWD/qml/qml.qrc
+
+ios {
+    QMAKE_INFO_PLIST = ios/Info.plist
+}

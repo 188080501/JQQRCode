@@ -1,4 +1,5 @@
 ﻿import QtQuick 2.7
+import QtGraphicalEffects 1.0
 import QtMultimedia 5.4
 import JQQRCodeReader 1.0
 
@@ -64,7 +65,7 @@ Loader {
                 running: true
 
                 onTriggered: {
-                    JQQRCodeReaderForQmlManage.analysisItem( output )
+                    JQQRCodeReaderForQmlManage.analysisItem( videoOutput )
                 }
             }
 
@@ -77,12 +78,21 @@ Loader {
             }
 
             VideoOutput {
-                id: output
+                id: videoOutput
                 anchors.fill: parent
                 source: camera
                 focus : visible
                 autoOrientation: true
                 fillMode: VideoOutput.PreserveAspectCrop
+                visible: false
+            }
+
+            BrightnessContrast {
+                id: brightnessContrast
+                anchors.fill: videoOutput
+                source: videoOutput
+                contrast: 0.5
+                brightness: 0.1
             }
 
             Rectangle {
