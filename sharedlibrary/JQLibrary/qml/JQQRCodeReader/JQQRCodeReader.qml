@@ -39,14 +39,16 @@ Loader {
                 target: JQQRCodeReaderForQmlManage
 
                 onTagFound: {
+                    if ( !timer.running ) { return; }
+
                     rectangleForView.visible = false;
                     animationForLightNeedle.running = false;
                     timer.running = false;
-                    timerForClose.running = true;
-
                     camera.stop();
 
                     jqQRCodeReader.tagFound( tag );
+
+                    timerForClose.running = true;
                 }
             }
 
@@ -60,12 +62,13 @@ Loader {
 
             Timer {
                 id: timer
-                interval: 200
+                interval: 100
                 repeat: true
                 running: true
 
                 onTriggered: {
-                    JQQRCodeReaderForQmlManage.analysisItem( videoOutput )
+                    JQQRCodeReaderForQmlManage.analysisItem( desaturate );
+                    JQQRCodeReaderForQmlManage.analysisItem( videoOutput );
                 }
             }
 
@@ -84,42 +87,51 @@ Loader {
                 focus : visible
                 autoOrientation: true
                 fillMode: VideoOutput.PreserveAspectCrop
-                visible: false
             }
 
             BrightnessContrast {
                 id: brightnessContrast
                 anchors.fill: videoOutput
                 source: videoOutput
-                contrast: 0.5
-                brightness: 0.1
+                contrast: 0.3
+                brightness: 0.4
+                visible: false
+            }
+
+            Desaturate {
+                id: desaturate
+                anchors.fill: videoOutput
+                source: brightnessContrast
+                desaturation: 1.0
+                visible: true
+                visible: false
             }
 
             Rectangle {
                 width: parent.width
-                height: (parent.height / 2) - 100
+                height: ( parent.height / 2 ) - 100
                 color: "#55000000"
             }
 
             Rectangle {
                 id: rectangle3
-                y: (parent.height / 2) + 100
+                y: ( parent.height / 2 ) + 100
                 width: parent.width
-                height: (parent.height / 2) - 100
+                height: ( parent.height / 2 ) - 100
                 color: "#55000000"
             }
 
             Rectangle {
-                y: (parent.height / 2) - 100
-                width: parent.width / 2 - 100
+                y: ( parent.height / 2 ) - 100
+                width: ( parent.width / 2 ) - 100
                 height: 200
                 color: "#55000000"
             }
 
             Rectangle {
-                x: (parent.width / 2) + 100
-                y: (parent.height / 2) - 100
-                width: parent.width / 2 - 100
+                x: ( parent.width / 2 ) + 100
+                y: ( parent.height / 2 ) - 100
+                width: ( parent.width / 2 ) - 100
                 height: 200
                 color: "#55000000"
             }
