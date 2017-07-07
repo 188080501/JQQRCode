@@ -13,6 +13,8 @@ Loader {
     property int decodeQrCodeType: 4096 // 二维码
 //    property int decodeQrCodeType: 32 // 一维码
 
+    property bool autoTurnOnFlash: false
+
     signal tagFound( string tag )
 
     onVisibleChanged: {
@@ -77,6 +79,22 @@ Loader {
 
                 focus {
                     focusMode: Camera.FocusContinuous
+                }
+
+                flash {
+                    id: flash
+
+                    onFlashReady: {
+                        if ( flash.ready )
+                        {
+                            mouseAreaForFlashControl.visible = true;
+
+                            if ( jqQRCodeReader.autoTurnOnFlash )
+                            {
+                                flash.mode = Camera.FlashVideoLight;
+                            }
+                        }
+                    }
                 }
             }
 
@@ -219,9 +237,33 @@ Loader {
                 verticalAlignment: Text.AlignVCenter
                 horizontalAlignment: Text.AlignHCenter
                 anchors.top: centralRectangle.bottom
-                anchors.topMargin: 30
+                anchors.topMargin: 20
                 anchors.horizontalCenter: parent.horizontalCenter
                 font.pixelSize: 12
+            }
+
+            MouseArea {
+                id: mouseAreaForFlashControl
+                anchors.top: centralRectangle.bottom
+                anchors.topMargin: 40
+                anchors.horizontalCenter: parent.horizontalCenter
+                width: 100
+                height: 100
+                visible: false
+
+                property bool openFlash: false
+
+                onClicked: {
+                    openFlash = !openFlash;
+                    flash.mode = ( openFlash ) ? ( Camera.FlashVideoLight ) : ( Camera.FlashOff );
+                }
+
+                Image {
+                    anchors.centerIn: parent
+                    source: ( mouseAreaForFlashControl.openFlash ) ?
+                                ( "qrc:/JQQRCodeReader/JQQRCodeReader/FlashOn.png" ) :
+                                ( "qrc:/JQQRCodeReader/JQQRCodeReader/FlashOff.png" )
+                }
             }
         }
     }

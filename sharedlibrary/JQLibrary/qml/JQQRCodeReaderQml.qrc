@@ -4,5 +4,7 @@
         <file>JQQRCodeReader/qmldir</file>
         <file>JQQRCodeReader/Frame.png</file>
         <file>JQQRCodeReader/LightNeedle.png</file>
+        <file>JQQRCodeReader/FlashOff.png</file>
+        <file>JQQRCodeReader/FlashOn.png</file>
     </qresource>
 </RCC>
