@@ -92,6 +92,7 @@ Loader {
                             if ( jqQRCodeReader.autoTurnOnFlash )
                             {
                                 flash.mode = Camera.FlashVideoLight;
+                                mouseAreaForFlashControl.openFlash = true;
                             }
                         }
                     }
