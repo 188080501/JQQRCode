@@ -9,6 +9,7 @@ Loader {
     height: parent.height
     asynchronous: false
     active: false
+    layer.enabled: true
 
     property int decodeQrCodeType: 4096 // 二维码
 //    property int decodeQrCodeType: 32 // 一维码
@@ -64,12 +65,12 @@ Loader {
 
             Timer {
                 id: timer
-                interval: 100
+                interval: 150
                 repeat: true
                 running: true
 
                 onTriggered: {
-                    JQQRCodeReaderForQmlManage.analysisItem( desaturate );
+                    JQQRCodeReaderForQmlManage.analysisItem( levelAdjust );
                     JQQRCodeReaderForQmlManage.analysisItem( videoOutput );
                 }
             }
@@ -101,27 +102,31 @@ Loader {
 
             VideoOutput {
                 id: videoOutput
-                anchors.fill: parent
+                anchors.centerIn: parent
+                width: Math.max( Math.min( camera.viewfinder.resolution.width, camera.viewfinder.resolution.height ), 1280 )
+                height: width
                 source: camera
                 focus : visible
                 autoOrientation: true
                 fillMode: VideoOutput.PreserveAspectCrop
+                scale: {
+                    if ( ( width / height ) > ( parent.width / parent.height ) )
+                    {
+                        return parent.height / height;
+                    }
+                    else
+                    {
+                        return parent.width / width;
+                    }
+                }
             }
 
-            BrightnessContrast {
-                id: brightnessContrast
+            LevelAdjust {
+                id: levelAdjust
                 anchors.fill: videoOutput
                 source: videoOutput
-                contrast: 0.3
-                brightness: 0.4
-                visible: false
-            }
-
-            Desaturate {
-                id: desaturate
-                anchors.fill: videoOutput
-                source: brightnessContrast
-                desaturation: 1.0
+                maximumInput: "#282828"
+                minimumOutput: "#282828"
                 visible: false
             }
 
@@ -214,10 +219,9 @@ Loader {
                     height: 24
                     source: "qrc:/JQQRCodeReader/JQQRCodeReader/LightNeedle.png"
 
-                    PropertyAnimation {
+                    YAnimator {
                         id: animationForLightNeedle
                         target: imageLightNeedle
-                        property: "y"
                         from: 0
                         to: 176
                         duration: 4000
