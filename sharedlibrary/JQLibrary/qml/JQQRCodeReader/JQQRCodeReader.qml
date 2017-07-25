@@ -1,7 +1,7 @@
 ﻿import QtQuick 2.7
-import QtGraphicalEffects 1.0
 import QtMultimedia 5.4
 import JQQRCodeReader 1.0
+//import TestClass 1.0
 
 Loader {
     id: jqQRCodeReader
@@ -65,12 +65,11 @@ Loader {
 
             Timer {
                 id: timer
-                interval: 150
+                interval: 100
                 repeat: true
                 running: true
 
                 onTriggered: {
-                    JQQRCodeReaderForQmlManage.analysisItem( levelAdjust );
                     JQQRCodeReaderForQmlManage.analysisItem( videoOutput );
                 }
             }
@@ -103,8 +102,9 @@ Loader {
             VideoOutput {
                 id: videoOutput
                 anchors.centerIn: parent
-                width: Math.max( Math.min( camera.viewfinder.resolution.width, camera.viewfinder.resolution.height ), 1280 )
+                width: Math.max( Math.min( camera.viewfinder.resolution.width, camera.viewfinder.resolution.height ), 1024 )
                 height: width
+                objectName: "VideoOutput"
                 source: camera
                 focus : visible
                 autoOrientation: true
@@ -121,14 +121,13 @@ Loader {
                 }
             }
 
-            LevelAdjust {
-                id: levelAdjust
-                anchors.fill: videoOutput
-                source: videoOutput
-                maximumInput: "#282828"
-                minimumOutput: "#282828"
-                visible: false
-            }
+//            TestClass {
+//                anchors.centerIn: parent
+//                width: 512
+//                height: 512
+//                scale: 0.5
+//                visible: false
+//            }
 
             Rectangle {
                 width: parent.width
@@ -268,6 +267,38 @@ Loader {
                     source: ( mouseAreaForFlashControl.openFlash ) ?
                                 ( "qrc:/JQQRCodeReader/JQQRCodeReader/FlashOn.png" ) :
                                 ( "qrc:/JQQRCodeReader/JQQRCodeReader/FlashOff.png" )
+                }
+            }
+
+            MouseArea {
+                id: mouseArea2
+                anchors.left: parent.left
+                anchors.verticalCenter: parent.verticalCenter
+                width: 50
+                height: 50
+
+                property int clickedCount: 0
+
+                onClicked: {
+                    ++clickedCount;
+                    timerForResetClickedCount.running = true;
+
+                    if ( clickedCount > 10 )
+                    {
+                        clickedCount = 0;
+                        levelAdjust.visible = !levelAdjust.visible;
+                    }
+                }
+
+                Timer {
+                    id: timerForResetClickedCount
+                    interval: 4000
+                    repeat: false
+                    running: true
+
+                    onTriggered: {
+                        mouseArea2.clickedCount = 0;
+                    }
                 }
             }
         }
