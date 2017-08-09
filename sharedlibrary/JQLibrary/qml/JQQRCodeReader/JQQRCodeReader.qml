@@ -9,12 +9,12 @@ Loader {
     height: parent.height
     asynchronous: false
     active: false
-    layer.enabled: true
 
     property int decodeQrCodeType: 4096 // 二维码
 //    property int decodeQrCodeType: 32 // 一维码
 
     property bool autoTurnOnFlash: false
+    property bool disableWhenTagFound: true
 
     signal tagFound( string tag )
 
@@ -33,6 +33,7 @@ Loader {
             height: jqQRCodeReader.height
             visible: true
             color: "#000000"
+            layer.enabled: true
 
             Component.onCompleted: {
                 JQQRCodeReaderForQmlManage.decodeQrCodeType = jqQRCodeReader.decodeQrCodeType;
@@ -42,16 +43,23 @@ Loader {
                 target: JQQRCodeReaderForQmlManage
 
                 onTagFound: {
-                    if ( !timer.running ) { return; }
+                    if ( !timerForAnalysisLoop.running ) { return; }
 
-                    rectangleForView.visible = false;
-                    animationForLightNeedle.running = false;
-                    timer.running = false;
-                    camera.stop();
+                    if ( jqQRCodeReader.disableWhenTagFound )
+                    {
+                        rectangleForView.visible = false;
+                        animationForLightNeedle.running = false;
+                        timerForAnalysisLoop.running = false;
+                        camera.stop();
 
-                    jqQRCodeReader.tagFound( tag );
+                        jqQRCodeReader.tagFound( tag );
 
-                    timerForClose.running = true;
+                        timerForClose.running = true;
+                    }
+                    else
+                    {
+                        jqQRCodeReader.tagFound( tag );
+                    }
                 }
             }
 
@@ -64,7 +72,7 @@ Loader {
             }
 
             Timer {
-                id: timer
+                id: timerForAnalysisLoop
                 interval: 100
                 repeat: true
                 running: true
