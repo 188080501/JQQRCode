@@ -1,7 +1,7 @@
 ﻿import QtQuick 2.7
 import QtMultimedia 5.4
 import JQQRCodeReader 1.0
-//import TestClass 1.0
+import ImagePreviewView 1.0
 
 Loader {
     id: jqQRCodeReader
@@ -78,7 +78,13 @@ Loader {
                 running: true
 
                 onTriggered: {
-                    JQQRCodeReaderForQmlManage.analysisItem( videoOutput );
+                    JQQRCodeReaderForQmlManage.analysisItem(
+                                videoOutput,
+                                centralRectangle.x - videoOutput.x,
+                                centralRectangle.y - videoOutput.y,
+                                centralRectangle.width,
+                                centralRectangle.height
+                            );
                 }
             }
 
@@ -129,136 +135,138 @@ Loader {
                 }
             }
 
-//            TestClass {
+//            ImagePreviewView {
 //                anchors.centerIn: parent
-//                width: 512
-//                height: 512
-//                scale: 0.5
-//                visible: false
+//                scale: videoOutput.scale
+//                opacity: 0.7
+//                width: 1
+//                height: 1
 //            }
 
             Rectangle {
-                width: parent.width
-                height: ( parent.height / 2 ) - 100
-                color: "#55000000"
-            }
-
-            Rectangle {
-                id: rectangle3
-                y: ( parent.height / 2 ) + 100
-                width: parent.width
-                height: ( parent.height / 2 ) - 100
-                color: "#55000000"
-            }
-
-            Rectangle {
-                y: ( parent.height / 2 ) - 100
-                width: ( parent.width / 2 ) - 100
-                height: 200
-                color: "#55000000"
-            }
-
-            Rectangle {
-                x: ( parent.width / 2 ) + 100
-                y: ( parent.height / 2 ) - 100
-                width: ( parent.width / 2 ) - 100
-                height: 200
-                color: "#55000000"
-            }
-
-            Rectangle {
                 id: centralRectangle
-                x: 53
-                y: 87
-                width: 200
-                height: 200
+                anchors.centerIn: parent
+                width: Math.min( parent.width, parent.height )
+                height: width
                 color: "#00000000"
-                anchors.horizontalCenter: parent.horizontalCenter
-                anchors.verticalCenter: parent.verticalCenter
                 border.color: "#ffffff"
+                border.width: 1 / centralRectangle.scale
+                scale: videoOutput.scale
 
-                Image {
-                    width: 20
-                    height: 20
-                    anchors.rightMargin: -5
-                    anchors.bottom: centralRectangle.top
-                    anchors.bottomMargin: -15
-                    anchors.right: centralRectangle.right
-                    source: "qrc:/JQQRCodeReader/JQQRCodeReader/Frame.png"
+                Rectangle {
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.bottom: parent.top
+                    width: parent.parent.width * 3
+                    height: parent.height * 2
+                    color: "#55000000"
+                }
+
+                Rectangle {
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.top: parent.bottom
+                    width: parent.parent.width * 3
+                    height: parent.height * 2
+                    color: "#55000000"
+                }
+
+                Rectangle {
+                    anchors.right: parent.left
+                    anchors.verticalCenter: parent.verticalCenter
+                    width: parent.parent.width * 2
+                    height: parent.height
+                    color: "#55000000"
+                }
+
+                Rectangle {
+                    anchors.left: parent.right
+                    anchors.verticalCenter: parent.verticalCenter
+                    width: parent.parent.width * 2
+                    height: parent.height
+                    color: "#55000000"
                 }
 
                 Image {
-                    width: 20
-                    height: 20
+                    anchors.horizontalCenter: centralRectangle.right
+                    anchors.verticalCenter: centralRectangle.top
+                    source: "qrc:/JQQRCodeReader/JQQRCodeReader/Frame.png"
+                    scale: 1 / centralRectangle.scale
+                    asynchronous: false
+                    cache: true
+                }
+
+                Image {
                     rotation: 90
-                    anchors.bottom: centralRectangle.bottom
-                    anchors.bottomMargin: -5
-                    anchors.right: centralRectangle.right
-                    anchors.rightMargin: -5
+                    anchors.horizontalCenter: centralRectangle.right
+                    anchors.verticalCenter: centralRectangle.bottom
                     source: "qrc:/JQQRCodeReader/JQQRCodeReader/Frame.png"
+                    scale: 1 / centralRectangle.scale
+                    asynchronous: false
+                    cache: true
                 }
 
                 Image {
-                    width: 20
-                    height: 20
                     rotation: 180
-                    anchors.bottom: centralRectangle.bottom
-                    anchors.bottomMargin: -5
-                    anchors.right: centralRectangle.left
-                    anchors.rightMargin: -15
+                    anchors.horizontalCenter: centralRectangle.left
+                    anchors.verticalCenter: centralRectangle.bottom
                     source: "qrc:/JQQRCodeReader/JQQRCodeReader/Frame.png"
+                    scale: 1 / centralRectangle.scale
+                    asynchronous: false
+                    cache: true
                 }
 
                 Image {
-                    width: 20
-                    height: 20
                     rotation: 270
-                    anchors.bottom: centralRectangle.top
-                    anchors.bottomMargin: -15
-                    anchors.right: centralRectangle.left
-                    anchors.rightMargin: -15
+                    anchors.horizontalCenter: centralRectangle.left
+                    anchors.verticalCenter: centralRectangle.top
                     source: "qrc:/JQQRCodeReader/JQQRCodeReader/Frame.png"
+                    scale: 1 / centralRectangle.scale
+                    asynchronous: false
+                    cache: true
                 }
 
                 Image {
                     id: imageLightNeedle
+                    anchors.horizontalCenter: parent.horizontalCenter
                     width: 200
                     height: 24
                     source: "qrc:/JQQRCodeReader/JQQRCodeReader/LightNeedle.png"
+                    scale: 1 / centralRectangle.scale
 
                     YAnimator {
                         id: animationForLightNeedle
                         target: imageLightNeedle
                         from: 0
-                        to: 176
+                        to: centralRectangle.height - 25
                         duration: 4000
-                        loops: -1
-                        running: true
                         easing.type: Easing.InOutCubic
+                        running: true
+
+                        onStopped: {
+                            start();
+                        }
                     }
                 }
             }
 
             Text {
                 id: labelForPrompt
-                x: 60
+                anchors.top: centralRectangle.bottom
+                anchors.topMargin: -30
+                anchors.horizontalCenter: parent.horizontalCenter
                 width: 200
                 height: 30
                 color: "#ffffff"
                 text: "将取景框对着二维码，即可自动扫描。\n双击空白处退出扫描模式"
                 verticalAlignment: Text.AlignVCenter
                 horizontalAlignment: Text.AlignHCenter
-                anchors.top: centralRectangle.bottom
-                anchors.topMargin: 20
-                anchors.horizontalCenter: parent.horizontalCenter
                 font.pixelSize: 12
             }
 
             MouseArea {
                 id: mouseAreaForFlashControl
+                anchors.horizontalCenter: parent.horizontalCenter
                 anchors.top: centralRectangle.bottom
                 anchors.topMargin: 40
-                anchors.horizontalCenter: parent.horizontalCenter
                 width: 100
                 height: 100
                 visible: false
