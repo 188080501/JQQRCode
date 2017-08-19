@@ -99,15 +99,10 @@ Loader {
                     id: flash
 
                     onFlashReady: {
-                        if ( flash.ready )
+                        if ( flash.ready && jqQRCodeReader.autoTurnOnFlash )
                         {
-                            mouseAreaForFlashControl.visible = true;
-
-                            if ( jqQRCodeReader.autoTurnOnFlash )
-                            {
-                                flash.mode = Camera.FlashVideoLight;
-                                mouseAreaForFlashControl.openFlash = true;
-                            }
+                            flash.mode = Camera.FlashVideoLight;
+                            mouseAreaForFlashControl.openFlash = true;
                         }
                     }
                 }
@@ -146,7 +141,7 @@ Loader {
             Rectangle {
                 id: centralRectangle
                 anchors.centerIn: parent
-                width: Math.min( parent.width, parent.height )
+                width: Math.min( parent.width, parent.height ) * 0.4
                 height: width
                 color: "#00000000"
                 border.color: "#ffffff"
@@ -156,23 +151,23 @@ Loader {
                 Rectangle {
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.bottom: parent.top
-                    width: parent.parent.width * 3
-                    height: parent.height * 2
+                    width: parent.parent.width * 3.5
+                    height: parent.height * 2.5
                     color: "#55000000"
                 }
 
                 Rectangle {
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.top: parent.bottom
-                    width: parent.parent.width * 3
-                    height: parent.height * 2
+                    width: parent.parent.width * 3.5
+                    height: parent.height * 2.5
                     color: "#55000000"
                 }
 
                 Rectangle {
                     anchors.right: parent.left
                     anchors.verticalCenter: parent.verticalCenter
-                    width: parent.parent.width * 2
+                    width: parent.parent.width * 2.5
                     height: parent.height
                     color: "#55000000"
                 }
@@ -180,7 +175,7 @@ Loader {
                 Rectangle {
                     anchors.left: parent.right
                     anchors.verticalCenter: parent.verticalCenter
-                    width: parent.parent.width * 2
+                    width: parent.parent.width * 2.5
                     height: parent.height
                     color: "#55000000"
                 }
@@ -269,7 +264,7 @@ Loader {
                 anchors.topMargin: 40
                 width: 100
                 height: 100
-                visible: false
+                visible: flash.ready
 
                 property bool openFlash: false
 
