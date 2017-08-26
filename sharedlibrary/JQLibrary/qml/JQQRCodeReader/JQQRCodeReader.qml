@@ -141,7 +141,7 @@ Loader {
             Rectangle {
                 id: centralRectangle
                 anchors.centerIn: parent
-                width: Math.min( parent.width, parent.height ) * 0.4
+                width: Math.min( parent.width, parent.height ) / scale * 0.4
                 height: width
                 color: "#00000000"
                 border.color: "#ffffff"
@@ -151,23 +151,23 @@ Loader {
                 Rectangle {
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.bottom: parent.top
-                    width: parent.parent.width * 3.5
-                    height: parent.height * 2.5
+                    width: jqQRCodeReader.width / centralRectangle.scale
+                    height: ( jqQRCodeReader.height / centralRectangle.scale - centralRectangle.height ) / 2
                     color: "#55000000"
                 }
 
                 Rectangle {
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.top: parent.bottom
-                    width: parent.parent.width * 3.5
-                    height: parent.height * 2.5
+                    width: jqQRCodeReader.width / centralRectangle.scale
+                    height: ( jqQRCodeReader.height / centralRectangle.scale - centralRectangle.height ) / 2
                     color: "#55000000"
                 }
 
                 Rectangle {
                     anchors.right: parent.left
                     anchors.verticalCenter: parent.verticalCenter
-                    width: parent.parent.width * 2.5
+                    width: ( jqQRCodeReader.width / centralRectangle.scale - centralRectangle.width ) / 2
                     height: parent.height
                     color: "#55000000"
                 }
@@ -175,7 +175,7 @@ Loader {
                 Rectangle {
                     anchors.left: parent.right
                     anchors.verticalCenter: parent.verticalCenter
-                    width: parent.parent.width * 2.5
+                    width: ( jqQRCodeReader.width / centralRectangle.scale - centralRectangle.width ) / 2
                     height: parent.height
                     color: "#55000000"
                 }
