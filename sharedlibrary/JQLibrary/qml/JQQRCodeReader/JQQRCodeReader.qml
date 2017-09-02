@@ -141,7 +141,7 @@ Loader {
             Rectangle {
                 id: centralRectangle
                 anchors.centerIn: parent
-                width: Math.min( parent.width, parent.height ) / scale * 0.4
+                width: Math.min( parent.width, parent.height ) / scale * 0.5
                 height: width
                 color: "#00000000"
                 border.color: "#ffffff"
