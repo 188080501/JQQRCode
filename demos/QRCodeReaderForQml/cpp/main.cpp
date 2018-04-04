@@ -13,8 +13,6 @@ int main(int argc, char *argv[])
 
     JQQRCODEREADERFORQML_REGISTERTYPE( engine );
 
-//    qmlRegisterType< TestClass >( "TestClass", 1, 0, "TestClass" );
-
     engine.load( QUrl( QStringLiteral( "qrc:/main.qml" ) ) );
 
     return app.exec();

@@ -145,7 +145,7 @@ Loader {
                 height: width
                 color: "#00000000"
                 border.color: "#ffffff"
-                border.width: 1 / centralRectangle.scale
+                border.width: 2 / centralRectangle.scale
                 scale: videoOutput.scale
 
                 Rectangle {
